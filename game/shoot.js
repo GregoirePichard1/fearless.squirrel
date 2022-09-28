@@ -51,6 +51,14 @@ function bullet_collision()
             player1.bullets.splice(i, 1);
             i--;
         }
+
+        if (ennemy1.position.x - 2 < Math.abs(player1.bullets[i].position.x) && 
+            ennemy1.position.x + 2 > Math.abs(player1.bullets[i].position.x) && 
+            ennemy1.position.y - 2 < Math.abs(player1.bullets[i].position.y) && 
+            ennemy1.position.y + 2 > Math.abs(player1.bullets[i].position.y))
+        {
+            ennemy1.dead();
+        }
     }
 
 }
@@ -67,8 +75,11 @@ function player_collision()
         player1.graphic.position.y -= y;
     if ( y > HEIGHT )
         player1.graphic.position.y -= y - HEIGHT;
+    if ( x < 0 )
+        player1.graphic.position.x -= x;
 
 }
+
 
 function player_falling()
 {
@@ -79,19 +90,16 @@ function player_falling()
     var y = player1.graphic.position.y | 0;
     var length = noGround.length;
     var element = null;
-
+    
     for (var i = 0; i < length; i++) {
         element = noGround[i];
+        
+        var tileX = (element?.[0]) | 0;
+        var tileY = (element?.[1]) | 0;
+        var mtileX = (element?.[0] + sizeOfTileX) | 0;
+        var mtileY = (element?.[1] + sizeOfTileY) | 0;
 
-        var tileX = (element[0]) | 0;
-        var tileY = (element[1]) | 0;
-        var mtileX = (element[0] + sizeOfTileX) | 0;
-        var mtileY = (element[1] + sizeOfTileY) | 0;
-
-        if ((x > tileX)
-            && (x < mtileX)
-            && (y > tileY) 
-            && (y < mtileY))
+        if ((x > tileX) && (x < mtileX) && (y > tileY) && (y < mtileY))
         {
            player1.dead();
         }

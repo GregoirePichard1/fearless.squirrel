@@ -1,4 +1,4 @@
-var Player = function(name, color, position, direction) {
+var Ennemy = function(name, color, position, direction) {
 
     this.name = name;
     this.position = position;
@@ -10,7 +10,7 @@ var Player = function(name, color, position, direction) {
     this.material = new THREE.MeshLambertMaterial({
         color: color,
         });
-    
+
     var singleGeometry1 = new THREE.Geometry();
     
     vehiculeMesh = new THREE.ConeGeometry(5, 20, 32);
@@ -20,9 +20,7 @@ var Player = function(name, color, position, direction) {
     this.graphic.rotateOnAxis(new THREE.Vector3(0,0,1), this.direction+(3*Math.PI/2));
 };
 
-Player.prototype.dead = function () 
-{
-    console.log(this.name + "est mort")
+Ennemy.prototype.dead = function () {
     this.graphic.position.z = this.graphic.position.z-0.1;
         //Nettoyage de la div container
         $("#container").html("");
@@ -30,7 +28,7 @@ Player.prototype.dead = function ()
         init();
 }
 
-Player.prototype.accelerate = function (distance) {
+Ennemy.prototype.accelerate = function (distance) {
     var max = 2;
 
     this.speed += distance / 4;
@@ -39,7 +37,7 @@ Player.prototype.accelerate = function (distance) {
     }
 };
 
-Player.prototype.decelerate = function (distance) {
+Ennemy.prototype.decelerate = function (distance) {
     var min = -1;
 
     this.speed -= distance / 16;
@@ -48,21 +46,21 @@ Player.prototype.decelerate = function (distance) {
     }
 };
 
-Player.prototype.displayInfo = function () {
+Ennemy.prototype.displayInfo = function () {
     jQuery('#'+this.name+' >.life').text(this.life);
 }
 
-Player.prototype.turnRight = function (angle) {
+Ennemy.prototype.turnRight = function (angle) {
     this.direction -= angle;
     this.graphic.rotateOnAxis(new THREE.Vector3(0,0,1), -angle);
 };
 
-Player.prototype.turnLeft = function (angle) {
+Ennemy.prototype.turnLeft = function (angle) {
     this.direction += angle;
     this.graphic.rotateOnAxis(new THREE.Vector3(0,0,1), +angle);
 };
 
-Player.prototype.move = function () {
+Ennemy.prototype.move = function () {
     var moveTo = new THREE.Vector3(
         this.speed * Math.cos(this.direction) + this.position.x,
         this.speed * Math.sin(this.direction) + this.position.y,

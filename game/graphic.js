@@ -1,7 +1,12 @@
 function init()
 {
     // set some camera attributes
-    var VIEW_ANGLE = 45,
+    //var VIEW_ANGLE = 45,
+    //    ASPECT = WIDTH / HEIGHT,
+    //    NEAR = 0.1,
+    //    FAR = 10000;
+
+    var VIEW_ANGLE = 50,
         ASPECT = WIDTH / HEIGHT,
         NEAR = 0.1,
         FAR = 10000;
@@ -17,17 +22,18 @@ function init()
 
     camera.position.z = 500;
     scene.add(camera);
-
+    
     renderer.setSize(WIDTH, HEIGHT);
 
     $container.append(renderer.domElement);
 
     noGround = [];
     ground = new Ground(0xffffff, WIDTH, HEIGHT, 10);
-    
     player1 = new Player("player1", 0xffff00, new THREE.Vector2(50, 0), 0);
+    ennemy1 = new Player("Ennemy1", 0x7f00ff, new THREE.Vector2(50, 0), 0);
     scene.add(player1.graphic);
-
+    scene.add(ennemy1.graphic);
+    scene.Ground = ground;
     light1 = new Light("sun", 0xffffff, "0,0,340");
     scene.add(light1);
 }
@@ -62,12 +68,15 @@ function Ground(color, size_x, size_y, nb_tile)
                 noGround.push([x, y]);
         }
     }
+    console.log(noGround);
+    return noGround;
 }
 
-function Lighht(name, color, position)
+function Light(name, color, position)
 {
-    pointLight = new THREE.PointLight(color, 50, 350);
-
+    //pointLight = new THREE.PointLight(color, 50, 350);
+    pointLight = new THREE.PointLight(color, 1, 10000);
+    pointLight.name = name;
     pointLight.position.x = position.split(',')[0];
     pointLight.position.y = position.split(',')[1];
     pointLight.position.z = position.split(',')[2];
